@@ -17,6 +17,6 @@
 > Claude may update **Status** column. Human owns **Actual** column.
 
 ## Project State
-- **Status**: Active
-- **Reason**:
-- **Revisit trigger**:
+- **Status**: Paused
+- **Reason**: User paused after Intent 2 (ScaffoldApp) to step away; no blocker, just a stopping point.
+- **Revisit trigger**: User resumes — pick up at Intent 3 (DataModelAndStorage).
