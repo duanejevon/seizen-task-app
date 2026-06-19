@@ -8,7 +8,7 @@
 | 3   | DataModelAndStorage | Done | 2h | | SQLite store + IPC bridge (window.taskApi); smoke test passes |
 | 4   | BoardSwitcherUI | Done | 1.5h | | Sidebar + useBoards hook; needs manual click-through on user's machine |
 | 5   | KanbanColumnsUI | Done | 1.5h | | Columns render/CRUD per board via useColumns hook |
-| 6   | CardCRUD | Todo | 2h | | |
+| 6   | CardCRUD | Done | 2h | | Colored cards: create/edit/delete via CardForm + 8-swatch picker |
 | 7   | DragAndDrop | Todo | 2h | | |
 | 8   | DueDatesAndReminders | Todo | 1.5h | | |
 | 9   | PersistenceHardening | Todo | 1h | | |

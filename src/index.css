@@ -158,3 +158,101 @@ body {
   width: 200px;
   flex-shrink: 0;
 }
+
+.kanban-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kanban-card {
+  background: rgba(127, 127, 127, 0.12);
+  border-left: 4px solid #a3a3a3;
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+}
+
+.kanban-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.kanban-card-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.kanban-card-description {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  white-space: pre-wrap;
+}
+
+.card-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.card-delete:hover {
+  opacity: 1;
+}
+
+.kanban-add-card {
+  background: none;
+  border: 1px dashed rgba(127, 127, 127, 0.4);
+  border-radius: 6px;
+  padding: 0.4rem;
+  cursor: pointer;
+  opacity: 0.7;
+  font: inherit;
+}
+
+.kanban-add-card:hover {
+  opacity: 1;
+}
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.card-form textarea {
+  font: inherit;
+  resize: vertical;
+}
+
+.card-form-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.card-color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-swatch.selected {
+  border-color: #fff;
+  outline: 2px solid rgba(0, 0, 0, 0.6);
+}
