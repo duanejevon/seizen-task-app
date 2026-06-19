@@ -1,5 +1,25 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("node:path");
+const { createStore } = require("./db");
+
+let store;
+
+function registerIpcHandlers() {
+  ipcMain.handle("boards:list", () => store.listBoards());
+  ipcMain.handle("boards:create", (_e, name) => store.createBoard(name));
+  ipcMain.handle("boards:rename", (_e, id, name) => store.renameBoard(id, name));
+  ipcMain.handle("boards:delete", (_e, id) => store.deleteBoard(id));
+
+  ipcMain.handle("columns:list", (_e, boardId) => store.listColumns(boardId));
+  ipcMain.handle("columns:create", (_e, boardId, name) => store.createColumn(boardId, name));
+  ipcMain.handle("columns:rename", (_e, id, name) => store.renameColumn(id, name));
+  ipcMain.handle("columns:delete", (_e, id) => store.deleteColumn(id));
+
+  ipcMain.handle("cards:list", (_e, columnId) => store.listCards(columnId));
+  ipcMain.handle("cards:create", (_e, columnId, input) => store.createCard(columnId, input));
+  ipcMain.handle("cards:update", (_e, id, fields) => store.updateCard(id, fields));
+  ipcMain.handle("cards:delete", (_e, id) => store.deleteCard(id));
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -17,12 +37,21 @@ function createWindow() {
   }
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  const dbPath = path.join(app.getPath("userData"), "taskapp.db");
+  store = createStore(dbPath);
+  registerIpcHandlers();
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+app.on("before-quit", () => {
+  store?.close();
 });
 
 app.on("activate", () => {

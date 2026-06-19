@@ -5,7 +5,7 @@
 |----:|------|--------|-----:|-------:|-------|
 | 1   | DecideTechStack | Done | 1h | | Electron + React + TS + better-sqlite3 |
 | 2   | ScaffoldApp | Done | 1.5h | | Electron+React+TS scaffold built; build verified, GUI launch not visually confirmed in sandbox |
-| 3   | DataModelAndStorage | Todo | 2h | | |
+| 3   | DataModelAndStorage | Done | 2h | | SQLite store + IPC bridge (window.taskApi); smoke test passes |
 | 4   | BoardSwitcherUI | Todo | 1.5h | | |
 | 5   | KanbanColumnsUI | Todo | 1.5h | | |
 | 6   | CardCRUD | Todo | 2h | | |
@@ -17,6 +17,6 @@
 > Claude may update **Status** column. Human owns **Actual** column.
 
 ## Project State
-- **Status**: Paused
-- **Reason**: User paused after Intent 2 (ScaffoldApp) to step away; no blocker, just a stopping point.
-- **Revisit trigger**: User resumes — pick up at Intent 3 (DataModelAndStorage).
+- **Status**: Active
+- **Reason**:
+- **Revisit trigger**:
