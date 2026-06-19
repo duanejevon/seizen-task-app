@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type KeyboardEvent } from "react";
 import type { Column } from "../shared/types";
 import { useColumns } from "../state/useColumns";
+import { CardList } from "./CardList";
 
 interface KanbanBoardProps {
   boardId: number;
@@ -73,7 +74,9 @@ export function KanbanBoard({ boardId }: KanbanBoardProps) {
               ×
             </button>
           </div>
-          <div className="kanban-column-cards">{/* cards land in Intent 06 */}</div>
+          <div className="kanban-column-cards">
+            <CardList columnId={column.id} />
+          </div>
         </div>
       ))}
       <form onSubmit={handleCreate} className="kanban-add-column">
