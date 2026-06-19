@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Card, CardUpdateInput, NewCardInput } from "../shared/types";
+import { toErrorMessage } from "./errorMessage";
 
 export type CardsByColumn = Record<number, Card[]>;
 
@@ -17,53 +18,87 @@ function groupByColumn(cards: Card[]): CardsByColumn {
 export function useBoardCards(boardId: number) {
   const [cardsByColumn, setCardsByColumn] = useState<CardsByColumn>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     const list = await window.taskApi.cards.listByBoard(boardId);
     setCardsByColumn(groupByColumn(list));
+    setError(null);
   }, [boardId]);
 
   useEffect(() => {
     setLoading(true);
-    refresh().then(() => setLoading(false));
+    refresh()
+      .catch((err) => setError(toErrorMessage(err)))
+      .finally(() => setLoading(false));
   }, [refresh]);
 
   const createCard = useCallback(
     async (columnId: number, input: NewCardInput) => {
-      await window.taskApi.cards.create(columnId, input);
-      await refresh();
+      try {
+        await window.taskApi.cards.create(columnId, input);
+        await refresh();
+      } catch (err) {
+        setError(toErrorMessage(err));
+      }
     },
     [refresh],
   );
 
   const updateCard = useCallback(
     async (id: number, fields: CardUpdateInput) => {
-      await window.taskApi.cards.update(id, fields);
-      await refresh();
+      try {
+        await window.taskApi.cards.update(id, fields);
+        await refresh();
+      } catch (err) {
+        setError(toErrorMessage(err));
+      }
     },
     [refresh],
   );
 
   const deleteCard = useCallback(
     async (id: number) => {
-      await window.taskApi.cards.delete(id);
-      await refresh();
+      try {
+        await window.taskApi.cards.delete(id);
+        await refresh();
+      } catch (err) {
+        setError(toErrorMessage(err));
+      }
     },
     [refresh],
   );
 
   // Persists the final card order for one or two columns after a drag ends,
-  // then resyncs from storage (the local optimistic state may be slightly
-  // stale relative to what was just written).
+  // then resyncs from storage either way — on success because the local
+  // optimistic state may be slightly stale, and on failure because the
+  // optimistic reorder needs to be rolled back to what's actually stored.
   const commitOrder = useCallback(
     async (columns: { columnId: number; cardIds: number[] }[]) => {
-      await Promise.all(
-        columns.map(({ columnId, cardIds }) => window.taskApi.cards.reorderColumn(columnId, cardIds)),
-      );
-      await refresh();
+      try {
+        await Promise.all(
+          columns.map(({ columnId, cardIds }) =>
+            window.taskApi.cards.reorderColumn(columnId, cardIds),
+          ),
+        );
+      } catch (err) {
+        setError(toErrorMessage(err));
+      } finally {
+        await refresh();
+      }
     },
     [refresh],
   );
 
-  return { cardsByColumn, setCardsByColumn, loading, createCard, updateCard, deleteCard, commitOrder };
+  return {
+    cardsByColumn,
+    setCardsByColumn,
+    loading,
+    error,
+    createCard,
+    updateCard,
+    deleteCard,
+    commitOrder,
+    retry: refresh,
+  };
 }

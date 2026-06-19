@@ -16,6 +16,7 @@ import type { Card, Column } from "../shared/types";
 import { useBoardCards, type CardsByColumn } from "../state/useBoardCards";
 import { useColumns } from "../state/useColumns";
 import { CardList } from "./CardList";
+import { ErrorBanner } from "./ErrorBanner";
 
 interface KanbanBoardProps {
   boardId: number;
@@ -42,16 +43,25 @@ function ColumnDropZone({ columnId, children }: { columnId: number; children: Re
 }
 
 export function KanbanBoard({ boardId }: KanbanBoardProps) {
-  const { columns, loading: columnsLoading, createColumn, renameColumn, deleteColumn } =
-    useColumns(boardId);
+  const {
+    columns,
+    loading: columnsLoading,
+    error: columnsError,
+    createColumn,
+    renameColumn,
+    deleteColumn,
+    retry: retryColumns,
+  } = useColumns(boardId);
   const {
     cardsByColumn,
     setCardsByColumn,
     loading: cardsLoading,
+    error: cardsError,
     createCard,
     updateCard,
     deleteCard,
     commitOrder,
+    retry: retryCards,
   } = useBoardCards(boardId);
 
   const [newName, setNewName] = useState("");
@@ -159,7 +169,10 @@ export function KanbanBoard({ boardId }: KanbanBoardProps) {
   if (columnsLoading || cardsLoading) return <p>Loading…</p>;
 
   return (
-    <DndContext
+    <>
+      {columnsError && <ErrorBanner message={columnsError} onRetry={retryColumns} />}
+      {cardsError && <ErrorBanner message={cardsError} onRetry={retryCards} />}
+      <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragStart={handleDragStart}
@@ -222,5 +235,6 @@ export function KanbanBoard({ boardId }: KanbanBoardProps) {
         )}
       </DragOverlay>
     </DndContext>
+    </>
   );
 }

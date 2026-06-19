@@ -11,7 +11,7 @@
 | 6   | CardCRUD | Done | 2h | | Colored cards: create/edit/delete via CardForm + 8-swatch picker |
 | 7   | DragAndDrop | Done | 2h | | dnd-kit multi-container DnD; card state lifted to board level |
 | 8   | DueDatesAndReminders | Done | 1.5h | | Due date field, overdue badge, Notification-based reminders (poll + on-launch) |
-| 9   | PersistenceHardening | Todo | 1h | | |
+| 9   | PersistenceHardening | Done | 1h | | SIGKILL crash test passes; error banners + retry added to hooks |
 | 10  | PackageAndPolish | Todo | 1.5h | | |
 
 > Claude may update **Status** column. Human owns **Actual** column.

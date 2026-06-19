@@ -45,6 +45,9 @@ function createStore(dbPath) {
     close() {
       db.close();
     },
+    integrityCheck() {
+      return db.pragma("integrity_check");
+    },
 
     listBoards() {
       return db.prepare("SELECT * FROM boards ORDER BY position").all();

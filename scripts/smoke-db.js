@@ -6,6 +6,17 @@ const { createStore } = require("../electron/db");
 
 const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "taskapp-smoke-")), "smoke.db");
 
+// Fresh install: opening a brand-new, never-before-seen path must create
+// the file + schema without throwing, and start with zero boards.
+const freshDir = fs.mkdtempSync(path.join(os.tmpdir(), "taskapp-fresh-"));
+try {
+  const freshStore = createStore(path.join(freshDir, "fresh.db"));
+  assert.deepStrictEqual(freshStore.listBoards(), []);
+  freshStore.close();
+} finally {
+  fs.rmSync(freshDir, { recursive: true, force: true });
+}
+
 try {
   let store = createStore(dbPath);
   const board = store.createBoard("Smoke Board");
