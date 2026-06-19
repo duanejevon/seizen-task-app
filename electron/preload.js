@@ -15,8 +15,11 @@ contextBridge.exposeInMainWorld("taskApi", {
   },
   cards: {
     list: (columnId) => ipcRenderer.invoke("cards:list", columnId),
+    listByBoard: (boardId) => ipcRenderer.invoke("cards:listByBoard", boardId),
     create: (columnId, input) => ipcRenderer.invoke("cards:create", columnId, input),
     update: (id, fields) => ipcRenderer.invoke("cards:update", id, fields),
     delete: (id) => ipcRenderer.invoke("cards:delete", id),
+    reorderColumn: (columnId, cardIds) =>
+      ipcRenderer.invoke("cards:reorderColumn", columnId, cardIds),
   },
 });

@@ -1,3 +1,5 @@
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import type { Card } from "../shared/types";
 import { CardForm, type CardFormValues } from "./CardForm";
@@ -10,10 +12,20 @@ interface CardItemProps {
 
 export function CardItem({ card, onUpdate, onDelete }: CardItemProps) {
   const [editing, setEditing] = useState(false);
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: card.id,
+  });
+
+  const style = {
+    borderLeftColor: card.color,
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
 
   if (editing) {
     return (
-      <div className="kanban-card" style={{ borderLeftColor: card.color }}>
+      <div ref={setNodeRef} className="kanban-card" style={style}>
         <CardForm
           initial={card}
           submitLabel="Save"
@@ -29,9 +41,12 @@ export function CardItem({ card, onUpdate, onDelete }: CardItemProps) {
 
   return (
     <div
+      ref={setNodeRef}
       className="kanban-card"
-      style={{ borderLeftColor: card.color }}
+      style={style}
       onClick={() => setEditing(true)}
+      {...attributes}
+      {...listeners}
     >
       <div className="kanban-card-header">
         <span className="kanban-card-title">{card.title}</span>

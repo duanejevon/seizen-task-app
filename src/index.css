@@ -173,6 +173,11 @@ body {
   cursor: pointer;
 }
 
+.kanban-card-overlay {
+  cursor: grabbing;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 .kanban-card-header {
   display: flex;
   align-items: flex-start;

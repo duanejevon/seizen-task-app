@@ -16,9 +16,13 @@ function registerIpcHandlers() {
   ipcMain.handle("columns:delete", (_e, id) => store.deleteColumn(id));
 
   ipcMain.handle("cards:list", (_e, columnId) => store.listCards(columnId));
+  ipcMain.handle("cards:listByBoard", (_e, boardId) => store.listCardsByBoard(boardId));
   ipcMain.handle("cards:create", (_e, columnId, input) => store.createCard(columnId, input));
   ipcMain.handle("cards:update", (_e, id, fields) => store.updateCard(id, fields));
   ipcMain.handle("cards:delete", (_e, id) => store.deleteCard(id));
+  ipcMain.handle("cards:reorderColumn", (_e, columnId, cardIds) =>
+    store.reorderColumn(columnId, cardIds),
+  );
 }
 
 function createWindow() {

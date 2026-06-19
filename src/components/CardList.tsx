@@ -1,28 +1,32 @@
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState } from "react";
-import { useCards } from "../state/useCards";
-import { CardForm } from "./CardForm";
+import type { Card } from "../shared/types";
+import { CardForm, type CardFormValues } from "./CardForm";
 import { CardItem } from "./CardItem";
 
 interface CardListProps {
   columnId: number;
+  cards: Card[];
+  onCreate: (columnId: number, values: CardFormValues) => void;
+  onUpdate: (id: number, values: CardFormValues) => void;
+  onDelete: (id: number) => void;
 }
 
-export function CardList({ columnId }: CardListProps) {
-  const { cards, loading, createCard, updateCard, deleteCard } = useCards(columnId);
+export function CardList({ columnId, cards, onCreate, onUpdate, onDelete }: CardListProps) {
   const [adding, setAdding] = useState(false);
-
-  if (loading) return <p className="kanban-card-loading">Loading…</p>;
 
   return (
     <div className="kanban-card-list">
-      {cards.map((card) => (
-        <CardItem key={card.id} card={card} onUpdate={updateCard} onDelete={deleteCard} />
-      ))}
+      <SortableContext items={cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
+        {cards.map((card) => (
+          <CardItem key={card.id} card={card} onUpdate={onUpdate} onDelete={onDelete} />
+        ))}
+      </SortableContext>
       {adding ? (
         <CardForm
           submitLabel="Add card"
           onSubmit={(values) => {
-            createCard(values);
+            onCreate(columnId, values);
             setAdding(false);
           }}
           onCancel={() => setAdding(false)}

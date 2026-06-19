@@ -85,6 +85,16 @@ function createStore(dbPath) {
     listCards(columnId) {
       return db.prepare("SELECT * FROM cards WHERE column_id = ? ORDER BY position").all(columnId);
     },
+    listCardsByBoard(boardId) {
+      return db
+        .prepare(
+          `SELECT cards.* FROM cards
+           JOIN columns ON cards.column_id = columns.id
+           WHERE columns.board_id = ?
+           ORDER BY cards.column_id, cards.position`,
+        )
+        .all(boardId);
+    },
     createCard(columnId, input) {
       const { title, description = "", color = "#a3a3a3", due_date = null } = input;
       const position = nextPosition(db, "cards", "column_id = ?", [columnId]);
@@ -116,6 +126,15 @@ function createStore(dbPath) {
     },
     deleteCard(id) {
       db.prepare("DELETE FROM cards WHERE id = ?").run(id);
+    },
+    reorderColumn(columnId, cardIds) {
+      const setPosition = db.prepare(
+        "UPDATE cards SET column_id = ?, position = ? WHERE id = ?",
+      );
+      const applyAll = db.transaction((ids) => {
+        ids.forEach((id, index) => setPosition.run(columnId, index, id));
+      });
+      applyAll(cardIds);
     },
   };
 }
