@@ -3,7 +3,7 @@
 ## Intents
 | No. | Name | Status | Est. | Actual | Notes |
 |----:|------|--------|-----:|-------:|-------|
-| 1   | FluentDesignTokens | Todo | 1.5h | | New Win11/Fluent palette, radii, shadows |
+| 1   | FluentDesignTokens | Done | 1.5h | | Fluent blue accent, radius/shadow tokens applied to chrome |
 | 2   | TranslucentSurfaces | Todo | 2h | | Semi-transparent sidebar/columns/cards |
 | 3   | BackgroundImageInfra | Todo | 2h | | IPC: file dialog, copy into userData, persist |
 | 4   | BackgroundImageUI | Todo | 2h | | Faded render + gallery/browse picker UI |
