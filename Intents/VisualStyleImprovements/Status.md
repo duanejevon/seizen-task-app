@@ -9,7 +9,7 @@
 | 4   | BackgroundImageUI | Done | 2h | | Dynamic background + picker UI (provisional sidebar placement) |
 | 5   | HamburgerAppMenu | Done | 1.5h | | Native menu hidden; hamburger panel houses background picker |
 | 6   | BoardIconPicker | Done | 2h | | Emoji grid + custom image icon per board, verified live |
-| 7   | SelectedBoardEmphasis | Todo | 1h | | Active board name more opaque than background |
+| 7   | SelectedBoardEmphasis | Done | 1h | | Active board name more opaque than background |
 | 8   | PolishAndReview | Todo | 1.5h | | Cross-cutting pass + user sign-off |
 
 > Claude may update **Status** column. Human owns **Actual** column.

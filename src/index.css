@@ -33,6 +33,10 @@
   --blur-md: 16px;
   --bg-overlay: rgba(255, 255, 255, 0.45);
   --app-bg-image: none;
+  /* Deliberately solid (not gray-alpha like the other surfaces) so the
+     selected board always reads as clearly more opaque than the
+     translucent background, regardless of which image is behind it. */
+  --selected-bg: rgba(255, 255, 255, 0.7);
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.85rem;
@@ -215,6 +219,8 @@ h1, h2, h3 {
 .board-switcher li.active .board-name {
   font-weight: 700;
   color: var(--color-accent);
+  background: var(--selected-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .board-name,
