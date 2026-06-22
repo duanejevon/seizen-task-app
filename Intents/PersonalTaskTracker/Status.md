@@ -19,4 +19,4 @@
 ## Project State
 - **Status**: All 10 intents complete
 - **Reason**: PackageAndPolish (final intent) finished — packaged AppImage launches and persists data offline outside the dev environment.
-- **Revisit trigger**: None pending. Optional follow-up: build/verify the Windows (nsis) target.
+- **Revisit trigger**: Manual follow-up pending — user to build/verify the Windows (nsis) target on their Windows PC (`git pull && npm install && npm run package:win`), since this Linux sandbox can't cross-compile or test a `.exe`. See 10.PackageAndPolish.md Follow-ups.
