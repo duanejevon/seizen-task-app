@@ -59,7 +59,7 @@ export function CardForm({ initial, submitLabel, onSubmit, onCancel }: CardFormP
       </div>
       <div className="card-form-actions">
         <button type="submit">{submitLabel}</button>
-        <button type="button" onClick={onCancel}>
+        <button type="button" className="btn-secondary" onClick={onCancel}>
           Cancel
         </button>
       </div>

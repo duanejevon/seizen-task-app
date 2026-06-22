@@ -2,6 +2,7 @@
   "name": "taskapp",
   "version": "1.0.0",
   "description": "Personal offline kanban task tracker",
+  "desktopName": "personal-task-tracker.desktop",
   "main": "electron/main.js",
   "scripts": {
     "dev:vite": "vite",
@@ -10,12 +11,35 @@
     "preview": "vite preview",
     "smoke:db": "node scripts/smoke-db.js",
     "smoke:crash": "node scripts/smoke-crash.js",
+    "package:linux": "npm run build && electron-builder --linux",
+    "package:win": "npm run build && electron-builder --win",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "build": {
+    "appId": "com.duanejevon.taskapp",
+    "productName": "Personal Task Tracker",
+    "icon": "build/icon.png",
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Office",
+      "syncDesktopName": true
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
@@ -31,6 +55,7 @@
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "electron": "^42.4.1",
+    "electron-builder": "^26.15.3",
     "playwright-core": "^1.61.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",

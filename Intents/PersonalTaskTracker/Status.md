@@ -12,11 +12,11 @@
 | 7   | DragAndDrop | Done | 2h | | dnd-kit multi-container DnD; card state lifted to board level |
 | 8   | DueDatesAndReminders | Done | 1.5h | | Due date field, overdue badge, Notification-based reminders (poll + on-launch) |
 | 9   | PersistenceHardening | Done | 1h | | SIGKILL crash test passes; error banners + retry added to hooks |
-| 10  | PackageAndPolish | Todo | 1.5h | | |
+| 10  | PackageAndPolish | Done | 1.5h | | Styling pass, icon, electron-builder (Linux AppImage built + verified offline via Playwright launch of the packaged binary); Windows nsis target not yet built |
 
 > Claude may update **Status** column. Human owns **Actual** column.
 
 ## Project State
-- **Status**: Paused
-- **Reason**: User paused after Intent 9 (PersistenceHardening); no blocker, just a stopping point.
-- **Revisit trigger**: User resumes — pick up at Intent 10 (PackageAndPolish), the final intent.
+- **Status**: All 10 intents complete
+- **Reason**: PackageAndPolish (final intent) finished — packaged AppImage launches and persists data offline outside the dev environment.
+- **Revisit trigger**: None pending. Optional follow-up: build/verify the Windows (nsis) target.
