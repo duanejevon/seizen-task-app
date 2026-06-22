@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron");
 const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("node:crypto");
@@ -104,6 +104,10 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Replaced by the in-app hamburger menu (see AppMenu.tsx) to match the
+  // Windows 11/Fluent look this app is going for.
+  Menu.setApplicationMenu(null);
+
   const dbPath = path.join(app.getPath("userData"), "dunit.db");
   store = createStore(dbPath);
   registerIpcHandlers();

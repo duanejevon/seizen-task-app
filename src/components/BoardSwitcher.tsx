@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type KeyboardEvent } from "react";
 import type { Board } from "../shared/types";
-import { BackgroundPicker } from "./BackgroundPicker";
+import type { useBackground } from "../state/useBackground";
+import { AppMenu } from "./AppMenu";
 
 interface BoardSwitcherProps {
   boards: Board[];
@@ -9,6 +10,7 @@ interface BoardSwitcherProps {
   onCreate: (name: string) => void;
   onRename: (id: number, name: string) => void;
   onDelete: (id: number) => void;
+  background: ReturnType<typeof useBackground>;
 }
 
 export function BoardSwitcher({
@@ -18,6 +20,7 @@ export function BoardSwitcher({
   onCreate,
   onRename,
   onDelete,
+  background,
 }: BoardSwitcherProps) {
   const [newName, setNewName] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -55,7 +58,10 @@ export function BoardSwitcher({
 
   return (
     <nav className="board-switcher">
-      <h2>Boards</h2>
+      <div className="board-switcher-header">
+        <AppMenu background={background} />
+        <h2>Boards</h2>
+      </div>
       <ul>
         {boards.map((board) => (
           <li key={board.id} className={board.id === activeBoardId ? "active" : ""}>
@@ -97,9 +103,6 @@ export function BoardSwitcher({
         />
         <button type="submit">Add</button>
       </form>
-      {/* Provisional placement — Intent 5 (HamburgerAppMenu) relocates this
-          into the app menu instead of the always-visible sidebar. */}
-      <BackgroundPicker />
     </nav>
   );
 }

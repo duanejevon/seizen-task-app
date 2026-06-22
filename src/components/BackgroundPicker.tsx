@@ -1,9 +1,13 @@
 import { BUILTIN_BACKGROUNDS } from "../assets/backgrounds";
-import { useBackground } from "../state/useBackground";
+import type { useBackground } from "../state/useBackground";
 import { ErrorBanner } from "./ErrorBanner";
 
-export function BackgroundPicker() {
-  const { selection, error, selectBuiltin, browseForImage, retry } = useBackground();
+interface BackgroundPickerProps {
+  background: ReturnType<typeof useBackground>;
+}
+
+export function BackgroundPicker({ background }: BackgroundPickerProps) {
+  const { selection, error, selectBuiltin, browseForImage, retry } = background;
 
   return (
     <div className="background-picker">

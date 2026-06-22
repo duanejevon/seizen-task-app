@@ -1,6 +1,7 @@
 import { BoardSwitcher } from "./components/BoardSwitcher";
 import { ErrorBanner } from "./components/ErrorBanner";
 import { KanbanBoard } from "./components/KanbanBoard";
+import { useBackground } from "./state/useBackground";
 import { useBoards } from "./state/useBoards";
 import { useDueDateReminders } from "./state/useDueDateReminders";
 
@@ -18,6 +19,9 @@ function App() {
   } = useBoards();
   const activeBoard = boards.find((b) => b.id === activeBoardId) ?? null;
   useDueDateReminders();
+  // Hooked here (not inside BackgroundPicker) so the background applies on
+  // launch regardless of whether the app menu has ever been opened.
+  const background = useBackground();
 
   return (
     <div className="app-shell">
@@ -28,6 +32,7 @@ function App() {
         onCreate={createBoard}
         onRename={renameBoard}
         onDelete={deleteBoard}
+        background={background}
       />
       <main className="board-content">
         {error && <ErrorBanner message={error} onRetry={retry} />}
