@@ -15,6 +15,7 @@ export interface TaskApi {
     create(boardId: number, name: string): Promise<Column>;
     rename(id: number, name: string): Promise<Column>;
     delete(id: number): Promise<void>;
+    reorder(columnIds: number[]): Promise<void>;
   };
   cards: {
     list(columnId: number): Promise<Card[]>;

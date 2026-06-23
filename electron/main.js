@@ -67,6 +67,7 @@ function registerIpcHandlers() {
   ipcMain.handle("columns:create", (_e, boardId, name) => store.createColumn(boardId, name));
   ipcMain.handle("columns:rename", (_e, id, name) => store.renameColumn(id, name));
   ipcMain.handle("columns:delete", (_e, id) => store.deleteColumn(id));
+  ipcMain.handle("columns:reorder", (_e, columnIds) => store.reorderColumns(columnIds));
 
   ipcMain.handle("cards:list", (_e, columnId) => store.listCards(columnId));
   ipcMain.handle("cards:listWithDueDates", () => store.listCardsWithDueDates());

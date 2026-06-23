@@ -107,6 +107,13 @@ function createStore(dbPath) {
     deleteColumn(id) {
       db.prepare("DELETE FROM columns WHERE id = ?").run(id);
     },
+    reorderColumns(columnIds) {
+      const setPosition = db.prepare("UPDATE columns SET position = ? WHERE id = ?");
+      const applyAll = db.transaction((ids) => {
+        ids.forEach((id, index) => setPosition.run(index, id));
+      });
+      applyAll(columnIds);
+    },
 
     listCards(columnId) {
       return db.prepare("SELECT * FROM cards WHERE column_id = ? ORDER BY position").all(columnId);

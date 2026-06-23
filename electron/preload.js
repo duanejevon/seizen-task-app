@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld("taskApi", {
     create: (boardId, name) => ipcRenderer.invoke("columns:create", boardId, name),
     rename: (id, name) => ipcRenderer.invoke("columns:rename", id, name),
     delete: (id) => ipcRenderer.invoke("columns:delete", id),
+    reorder: (columnIds) => ipcRenderer.invoke("columns:reorder", columnIds),
   },
   cards: {
     list: (columnId) => ipcRenderer.invoke("cards:list", columnId),
