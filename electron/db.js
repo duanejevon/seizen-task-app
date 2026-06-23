@@ -82,6 +82,13 @@ function createStore(dbPath) {
       db.prepare("UPDATE boards SET icon = ? WHERE id = ?").run(icon, id);
       return db.prepare("SELECT * FROM boards WHERE id = ?").get(id);
     },
+    reorderBoards(boardIds) {
+      const setPosition = db.prepare("UPDATE boards SET position = ? WHERE id = ?");
+      const applyAll = db.transaction((ids) => {
+        ids.forEach((id, index) => setPosition.run(index, id));
+      });
+      applyAll(boardIds);
+    },
 
     listColumns(boardId) {
       return db.prepare("SELECT * FROM columns WHERE board_id = ? ORDER BY position").all(boardId);

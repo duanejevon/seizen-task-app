@@ -56,6 +56,7 @@ function registerIpcHandlers() {
   ipcMain.handle("boards:rename", (_e, id, name) => store.renameBoard(id, name));
   ipcMain.handle("boards:delete", (_e, id) => store.deleteBoard(id));
   ipcMain.handle("boards:setIcon", (_e, id, icon) => store.setBoardIcon(id, icon));
+  ipcMain.handle("boards:reorder", (_e, boardIds) => store.reorderBoards(boardIds));
   ipcMain.handle("boards:browseIcon", async (event, id) => {
     const picked = await pickAndCopyImage(event, "board-icons");
     if (!picked) return null;
