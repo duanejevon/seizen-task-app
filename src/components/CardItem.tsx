@@ -10,6 +10,18 @@ interface CardItemProps {
   onDelete: (id: number) => void;
 }
 
+// Painted as a background-image gradient (not background-color) so it
+// layers on top of the existing translucent --surface-1 glass background
+// instead of replacing it.
+export function cardTintStyle(hex: string): { backgroundImage: string } {
+  const clean = hex.replace("#", "");
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  const tint = `rgba(${r}, ${g}, ${b}, 0.16)`;
+  return { backgroundImage: `linear-gradient(${tint}, ${tint})` };
+}
+
 function formatDueDate(dueDate: string): string {
   const date = new Date(dueDate);
   if (Number.isNaN(date.getTime())) return dueDate;
@@ -29,6 +41,7 @@ export function CardItem({ card, onUpdate, onDelete }: CardItemProps) {
 
   const style = {
     borderLeftColor: card.color,
+    ...cardTintStyle(card.color),
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1,

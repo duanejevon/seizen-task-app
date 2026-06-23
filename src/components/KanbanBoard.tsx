@@ -21,6 +21,7 @@ import { useState, type FormEvent, type KeyboardEvent, type ReactNode } from "re
 import type { Card, Column } from "../shared/types";
 import { useBoardCards, type CardsByColumn } from "../state/useBoardCards";
 import { useColumns } from "../state/useColumns";
+import { cardTintStyle } from "./CardItem";
 import { CardList } from "./CardList";
 import { ErrorBanner } from "./ErrorBanner";
 
@@ -342,7 +343,10 @@ export function KanbanBoard({ boardId }: KanbanBoardProps) {
       </div>
       <DragOverlay>
         {activeCard && (
-          <div className="kanban-card kanban-card-overlay" style={{ borderLeftColor: activeCard.color }}>
+          <div
+            className="kanban-card kanban-card-overlay"
+            style={{ borderLeftColor: activeCard.color, ...cardTintStyle(activeCard.color) }}
+          >
             <span className="kanban-card-title">{activeCard.title}</span>
           </div>
         )}
