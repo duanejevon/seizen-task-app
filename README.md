@@ -7,12 +7,21 @@ network connection required.
 
 ## Features
 
-- **Multiple boards** — switch between separate projects from the sidebar
+- **Multiple boards** — switch between separate projects from the sidebar,
+  each with its own emoji or custom-image icon
 - **Kanban columns** — create, rename, and delete columns per board
-- **Colored cards** — title, description, and an 8-swatch color picker
-- **Drag and drop** — reorder cards within a column or move them across columns
+- **Colored cards** — title, description, an 8-swatch color picker, and a
+  matching background tint alongside the accent border
+- **Drag and drop** — reorder cards within a column or move them across
+  columns; drag boards and columns themselves into a new order via a grip
+  handle, with the order persisted
 - **Due dates & reminders** — overdue cards are flagged, and the app fires
   desktop notifications for upcoming/overdue due dates on a poll and on launch
+- **Customizable look** — a Fluent-inspired, Windows 11-style theme with
+  translucent "glass" boards/columns over a customizable background image
+  (built-in gallery or browse for a local file), a hamburger app menu in
+  place of the native menu bar, and clear visual emphasis on the selected
+  board
 - **Fully offline** — all data is stored in a local SQLite database; nothing
   leaves your machine
 
