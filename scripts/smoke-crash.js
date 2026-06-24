@@ -10,7 +10,7 @@ const { spawn } = require("node:child_process");
 const { createStore } = require("../electron/db");
 
 async function main() {
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dunit-crash-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "seizen-crash-"));
   const dbPath = path.join(tmpDir, "crash.db");
   const workerPath = path.join(__dirname, "_crash-worker.js");
 

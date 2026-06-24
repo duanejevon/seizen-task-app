@@ -4,11 +4,11 @@ const os = require("node:os");
 const path = require("node:path");
 const { createStore } = require("../electron/db");
 
-const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "dunit-smoke-")), "smoke.db");
+const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "seizen-smoke-")), "smoke.db");
 
 // Fresh install: opening a brand-new, never-before-seen path must create
 // the file + schema without throwing, and start with zero boards.
-const freshDir = fs.mkdtempSync(path.join(os.tmpdir(), "dunit-fresh-"));
+const freshDir = fs.mkdtempSync(path.join(os.tmpdir(), "seizen-fresh-"));
 try {
   const freshStore = createStore(path.join(freshDir, "fresh.db"));
   assert.deepStrictEqual(freshStore.listBoards(), []);

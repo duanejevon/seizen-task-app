@@ -1,4 +1,4 @@
-# DunIT - Personal KanBan Task App
+# Seizen - Personal KanBan Task App
 
 A fully offline, desktop kanban board for personal task tracking, built using Claude code. Run
 multiple boards (one per project), each with its own columns, colored
@@ -61,10 +61,10 @@ requires Wine and isn't supported in every environment):
 
 ```bash
 # On Linux:
-npm run package:linux     # → release/DunIT - Personal KanBan Task App-<version>.AppImage
+npm run package:linux     # → release/Seizen - Personal KanBan Task App-<version>.AppImage
 
 # On Windows:
-npm run package:win       # → release/DunIT - Personal KanBan Task App Setup <version>.exe
+npm run package:win       # → release/Seizen - Personal KanBan Task App Setup <version>.exe
 ```
 
 Run the resulting installer/AppImage to install and launch the app — it

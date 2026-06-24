@@ -1,6 +1,6 @@
 {
-  "name": "dunit",
-  "version": "1.2.0",
+  "name": "seizen",
+  "version": "1.2.1",
   "description": "Personal offline kanban task tracker",
   "desktopName": "personal-task-tracker.desktop",
   "main": "electron/main.js",
@@ -20,8 +20,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "type": "commonjs",
   "build": {
-    "appId": "com.duanejevon.dunit",
-    "productName": "DunIT - Personal KanBan Task App",
+    "appId": "com.duanejevon.seizen",
+    "productName": "Seizen - Personal KanBan Task App",
     "icon": "build/icon.png",
     "files": [
       "dist/**",

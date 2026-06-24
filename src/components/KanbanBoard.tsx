@@ -6,6 +6,7 @@ import {
   useDroppable,
   useSensor,
   useSensors,
+  type CollisionDetection,
   type DragEndEvent,
   type DragOverEvent,
   type DragStartEvent,
@@ -42,6 +43,22 @@ function columnSortableId(id: number): string {
 function parseColumnId(id: number | string): number | null {
   if (typeof id !== "string" || !id.startsWith(COLUMN_ID_PREFIX)) return null;
   return Number(id.slice(COLUMN_ID_PREFIX.length));
+}
+
+// Columns and cards share one DndContext, so by default closestCenter
+// compares the dragged item against every droppable on the board — cards,
+// column drop zones, and columns alike. A column's rect spans its whole
+// height, so any natural (non-straight-line) mouse movement can land closer
+// to a card's center than to a sibling column's, making `over` resolve to a
+// card and silently dropping the reorder. Restrict each drag to candidates
+// of its own kind so column drags only ever resolve against other columns.
+function collisionDetectionStrategy(args: Parameters<CollisionDetection>[0]) {
+  const draggingColumn = parseColumnId(args.active.id) != null;
+  const droppableContainers = args.droppableContainers.filter((container) => {
+    const isColumnContainer = parseColumnId(container.id) != null;
+    return draggingColumn ? isColumnContainer : !isColumnContainer;
+  });
+  return closestCenter({ ...args, droppableContainers });
 }
 
 function findContainerId(cardsByColumn: CardsByColumn, id: number | string): number | null {
@@ -285,7 +302,7 @@ export function KanbanBoard({ boardId }: KanbanBoardProps) {
       {cardsError && <ErrorBanner message={cardsError} onRetry={retryCards} />}
       <DndContext
       sensors={sensors}
-      collisionDetection={closestCenter}
+      collisionDetection={collisionDetectionStrategy}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}

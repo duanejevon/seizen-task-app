@@ -15,6 +15,29 @@ function backgroundsDir() {
   return path.join(app.getPath("userData"), "backgrounds");
 }
 
+// The app was renamed from "dunit" to "seizen" (the package.json "name"
+// field, which Electron uses to derive userData's path), so existing
+// installs would otherwise look like they lost all their boards on first
+// launch post-rename. Move the old userData contents over once.
+function migrateLegacyUserData() {
+  const newDir = app.getPath("userData");
+  const newDbPath = path.join(newDir, "seizen.db");
+  if (fs.existsSync(newDbPath)) return;
+
+  const oldDir = path.join(path.dirname(newDir), "dunit");
+  const oldDbPath = path.join(oldDir, "dunit.db");
+  if (!fs.existsSync(oldDbPath)) return;
+
+  fs.mkdirSync(newDir, { recursive: true });
+  fs.renameSync(oldDbPath, newDbPath);
+  for (const subdir of ["backgrounds", "board-icons"]) {
+    const oldSub = path.join(oldDir, subdir);
+    if (fs.existsSync(oldSub)) {
+      fs.renameSync(oldSub, path.join(newDir, subdir));
+    }
+  }
+}
+
 // Settings store a tagged string ("builtin:<id>" or "custom:<filename>") so a
 // single TEXT column can represent either kind of selection.
 function resolveBackgroundSelection(raw) {
@@ -125,7 +148,8 @@ app.whenReady().then(() => {
   // Windows 11/Fluent look this app is going for.
   Menu.setApplicationMenu(null);
 
-  const dbPath = path.join(app.getPath("userData"), "dunit.db");
+  migrateLegacyUserData();
+  const dbPath = path.join(app.getPath("userData"), "seizen.db");
   store = createStore(dbPath);
   registerIpcHandlers();
   createWindow();
