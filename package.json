@@ -1,6 +1,6 @@
 {
   "name": "seizen",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Personal offline kanban task tracker",
   "desktopName": "personal-task-tracker.desktop",
   "main": "electron/main.js",
@@ -13,6 +13,7 @@
     "smoke:crash": "node scripts/smoke-crash.js",
     "package:linux": "npm run build && electron-builder --linux",
     "package:win": "npm run build && electron-builder --win",
+    "package:mac": "npm run build && electron-builder --mac",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -38,6 +39,10 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity"
     }
   },
   "dependencies": {

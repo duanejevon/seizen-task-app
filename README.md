@@ -1,9 +1,10 @@
 # Seizen - Personal KanBan Task App
 
-A fully offline, desktop kanban board for personal task tracking, built using Claude code. Run
-multiple boards (one per project), each with its own columns, colored
-cards, due dates, and reminders — all stored locally, no account or
-network connection required.
+Seizen (整然) is a Japanese adjective meaning "well organized". 
+A fully offline, desktop kanban board for personal task tracking, built 
+nearly 100% using Claude code. Run multiple boards (one per project), 
+each with its own columns, colored cards, due dates, and reminders — 
+all stored locally, no account or network connection required.
 
 ## Features
 
@@ -52,12 +53,14 @@ npm run dev      # starts the Vite dev server + Electron, with hot reload
 | `npm run smoke:crash` | Verifies the database survives a hard crash (SIGKILL) mid-write |
 | `npm run package:linux` | Build a Linux AppImage installer (see below) |
 | `npm run package:win` | Build a Windows installer (see below) |
+| `npm run package:mac` | Build a macOS DMG installer (see below) |
 
 ## Building an installer
 
 Installers are built per-platform with `electron-builder` and must be built
-**on the target OS** (cross-compiling the Windows installer from Linux
-requires Wine and isn't supported in every environment):
+**on the target OS** — cross-compiling isn't supported here because
+`better-sqlite3` is a native module that has to be built/fetched for the
+host OS and architecture:
 
 ```bash
 # On Linux:
@@ -65,10 +68,15 @@ npm run package:linux     # → release/Seizen - Personal KanBan Task App-<versi
 
 # On Windows:
 npm run package:win       # → release/Seizen - Personal KanBan Task App Setup <version>.exe
+
+# On macOS:
+npm run package:mac       # → release/Seizen - Personal KanBan Task App-<version>.dmg
 ```
 
-Run the resulting installer/AppImage to install and launch the app — it
-works fully offline, independent of the dev environment.
+Run the resulting installer/AppImage/DMG to install and launch the app — it
+works fully offline, independent of the dev environment. The macOS build
+isn't code-signed or notarized, so Gatekeeper will warn on first launch;
+right-click the app and choose "Open" to bypass it.
 
 ## License
 
