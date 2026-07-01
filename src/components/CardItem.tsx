@@ -78,6 +78,11 @@ export function CardItem({ card, onUpdate, onDelete }: CardItemProps) {
           type="button"
           className="card-delete"
           aria-label={`Delete ${card.title}`}
+          // Keep pointerdown from reaching the card's drag listeners: otherwise
+          // the synchronous window.confirm below interrupts an in-progress dnd-kit
+          // pointer interaction, stranding its document-level selection/click
+          // listeners and leaving every text input unusable ("readonly").
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
             if (window.confirm(`Delete card "${card.title}"?`)) onDelete(card.id);
